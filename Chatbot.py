@@ -78,9 +78,7 @@ if auth_status:
         with open('Technical Documentation.pdf', "rb") as file:
             pdf_content = file.read()  # Read the PDF content
             st.session_state['pdf_docs'] = pdf_content  # Store the content in session state
-    if 'vectorstore' not in st.session_state:
-      st.session_state['vectorstore']=None
-      
+   
     if "raw_text" not in st.session_state:
         # Create a file-like object using io.BytesIO
         file_like = io.BytesIO(st.session_state['pdf_docs'])
@@ -88,6 +86,8 @@ if auth_status:
         st.session_state['raw_text'] = raw_text
         text_chunks = get_text_chunks(raw_text)
         st.session_state['text_chunks'] = text_chunks
+      
+    if 'vectorstore' not in st.session_state:
         vectorstore = get_vectorstore(text_chunks)
         st.session_state['vectorstore'] = vectorstore
 
